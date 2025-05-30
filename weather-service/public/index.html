@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Сервис прогноза погоды</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h2>Почасовой прогноз погоды</h2>
+  <label>Выберите город:
+    <br>
+    <input class="cityInput" placeholder="Например, Moscow">
+  </label>
+  <button class="load">Загрузить</button>
+  <br>
+  <canvas class="chart" width="600" height="400"></canvas>
+
+<script>
+  class WeatherApp {
+    constructor(chartSelector, inputSelector, buttonSelector) {
+      this.chart = null;
+      this.chartElement = document.querySelector('.chart');
+      this.inputElement = document.querySelector('.cityInput');
+      this.buttonElement = document.querySelector('.load');
+
+      this.buttonElement.addEventListener('click', () => this.loadWeather());
+    }
+
+    // Запрос данных 
+    async fetchWeather(city) {
+      const response = await fetch(`/weather?city=${encodeURIComponent(city)}`);
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Ошибка при получении данных');
+      }
+      return response.json();
+    }
+
+    // Рендер графика
+    renderChart(data) {
+      const labels = data.time.map(t => t.split('T')[1]);
+
+      const ctx = this.chartElement.getContext('2d');
+      if (this.chart && typeof this.chart.destroy === 'function') {
+        this.chart.destroy();
+      }
+
+      this.chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: `Температура в ${data.city}`,
+            data: data.temperature_2m,
+            borderColor: 'rgb(75, 192, 192)',
+            fill: false,
+            tension: 0.2
+          }]
+        },
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Время'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: '°C'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Загрузка графика
+    async loadWeather() {
+      const city = this.inputElement.value.trim();
+      if (!city) {
+        alert('Введите город');
+        return;
+      }
+
+      try {
+        const weatherData = await this.fetchWeather(city);
+        this.renderChart(weatherData);
+      } catch (error) {
+        alert(`Ошибка: ${error.message}`);
+      }
+    }
+  }
+
+  // Инициализация приложения
+  document.addEventListener('DOMContentLoaded', () => {
+    new WeatherApp('.chart', '.cityInput', '.load');
+  });
+
+</script>
+</body>
+</html>
