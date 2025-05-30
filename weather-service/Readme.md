@@ -9,32 +9,32 @@
 
 ## Установка
 1. #### Склонируйте репозиторий:
-git clone <repository-url>
-cd weather-service
+`git clone https://github.com/Kotsulevskii/DocZilla/tree/main/weather-service`
+`cd weather-service`
 
 2. #### Установите зависимости:
-npm install
+`npm install`
 3. #### Запуск проекта
-npm start
+`npm start`
 
-Сервис будет доступен по адресу: http://localhost:3000
+Сервис будет доступен по адресу: `http://localhost:3000`
 
 ## Использование
 Для получения прогноза погоды выполните GET-запрос:
 
-GET /weather?city=<название города>
+`GET /weather?city=<название города>`
 Пример:
 
-http://localhost:3000/weather?city=Moscow
+`http://localhost:3000/weather?city=Moscow`
 #### Ответ сервера
 Успешный ответ:
 
-json
-{
-  "city": "Moscow",
-  "time": ["2023-05-01T00:00", "2023-05-01T01:00", ...],
-  "temperature_2m": [12.5, 12.3, ...]
-}
+`json`
+`{`
+ ` "city": "Moscow",`
+ ` "time": ["2023-05-01T00:00", "2023-05-01T01:00", ...],`
+ ` "temperature_2m": [12.5, 12.3, ...]`
+`}`
 
 #### Ошибки:
 
