@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Файлообменник</title>
+</head>
+<body>
+  <div class="upload-container">
+    <h2>Загрузка файла</h2>
+    <form class="uploadForm" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" class="fileInput" required>
+      <button type="submit">Загрузить</button>
+    </form>
+    
+    <div class="status" style="display: none;"></div>
+    <div class="link" style="display: none;"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

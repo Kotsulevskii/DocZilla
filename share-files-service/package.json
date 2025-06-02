@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "content-disposition": "^0.5.4",
+    "express": "^5.1.0",
+    "fs-extra": "^11.3.0",
+    "multer": "^2.0.0",
+    "uuid": "^11.1.0"
+  }
+}
